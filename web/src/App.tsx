@@ -35,6 +35,8 @@ export default function App() {
   async function run(label: string, fn: () => Promise<unknown>) {
     setBusy(label); setError('');
     try { await fn(); await refresh(); } catch (e: any) { setError(e.message || String(e)); } finally { setBusy(''); }
+    // RPC nodes can lag a block or two behind the transaction we just sent: read again shortly
+    for (const ms of [2000, 5000, 10000]) setTimeout(() => refresh().catch(() => {}), ms);
   }
 
   return (
