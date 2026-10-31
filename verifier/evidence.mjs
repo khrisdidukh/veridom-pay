@@ -1,5 +1,5 @@
 // Produce a TEE-signed verdict bundle for one milestone (used by the CLI and the demo server).
-import { NEARAI, checkRequestShape, sha256hex, view } from './lib.mjs';
+import { NEARAI, answerOf, checkRequestShape, sha256hex, view } from './lib.mjs';
 
 async function photoItem(data) {
   let mime = data.subarray(0, 4).toString('hex') === '89504e47' ? 'png' : 'jpeg';
@@ -19,9 +19,14 @@ export async function makeEvidence({ project, milestone, kind = 'MILESTONE', pho
   const request = Buffer.from(tpl.prefix + (await Promise.all(photos.map(photoItem))).join('') + tpl.suffix);
   const shapeError = checkRequestShape(request, tpl);
   if (shapeError) throw new Error(shapeError);
-  const res = await fetch(`${NEARAI}/chat/completions`, { method: 'POST', headers, body: request });
-  const response = Buffer.from(await res.arrayBuffer());
-  if (!res.ok) throw new Error(`NEAR AI ${res.status}: ${response.toString().slice(0, 300)}`);
+  // a reasoning model occasionally spends its whole token budget thinking and returns no answer: ask again
+  let response;
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(`${NEARAI}/chat/completions`, { method: 'POST', headers, body: request });
+    response = Buffer.from(await res.arrayBuffer());
+    if (!res.ok) throw new Error(`NEAR AI ${res.status}: ${response.toString().slice(0, 300)}`);
+    try { answerOf(response); break; } catch { if (attempt >= 3) throw new Error('the inspector returned no verdict three times; try again'); }
+  }
   const id = JSON.parse(response).id;
   let signature;
   for (let i = 0; i < 15 && !signature; i++) {
