@@ -45,8 +45,25 @@ The demo site holds three testnet accounts. You switch between them with the rol
    photo that doesn't match the criteria: the inspector is strict.
 5. If it was approved, press **Sell receivable now** (97%). Then switch to **Investor** and press **Buy**.
    → The NFT changes hands and the contractor has cash before the review window ends.
-6. Offline: `cd verifier && npm install && npm test`
+6. Under **Get paid in a stablecoin, on any chain**, pick USDC on Solana, Base, Arbitrum or NEAR, paste an
+   address and press **Get a live quote**.
+   → A live mainnet quote from NEAR Intents: how much USDC the receivable's holder would receive, and in
+   how many seconds. Nothing moves.
+7. Offline: `cd verifier && npm install && npm test`
    → Every bundle in `evidence/` verifies, and every altered or forged one fails.
+
+## Getting paid where the money is useful
+
+A contractor in Ukraine or Austria doesn't want NEAR; they want dollars they can spend. When escrow pays a
+receivable, NEAR Intents can deliver it as USDC on the payee's chain. The app shows a live mainnet quote
+for the milestone's payout, and `verifier/payout.mjs` executes it:
+
+```bash
+cd verifier
+node payout.mjs quote 0.95 sol:<your Solana address>   # live quote, nothing moves
+node payout.mjs keygen                                 # mainnet payout account; the key stays in keys/
+node payout.mjs send 0.95 sol:<your Solana address>    # real: wrap → deposit to the intent → USDC lands, receipt saved
+```
 
 ## What is verified, by whom
 
@@ -76,7 +93,7 @@ The inspector is strict by design. Real results from 31 Oct 2026 (bundles in [`e
 |---|---|
 | `contracts/veridom-pay` | Rust contract (near-sdk 5.5): escrow, TEE verdict verification, NEP-171 receivables, early-payment market, retainage |
 | `contracts/veridom-pay-tests` | 12 tests incl. forged verdict, prompt injection, lenient prompt, wrong milestone, unknown signer |
-| `verifier/` | Node tools: produce signed evidence (`make-evidence.mjs`), verify bundles offline (`verify-bundle.mjs`), submit (`submit.mjs`) |
+| `verifier/` | Node tools: produce signed evidence (`make-evidence.mjs`), verify bundles offline (`verify-bundle.mjs`), submit (`submit.mjs`), and the mainnet stablecoin payout through NEAR Intents (`payout.mjs`) |
 | `server/` | Demo API: three testnet role accounts, photo inspection, market actions; serves the web app |
 | `web/` | React app: inspection sheet, money trail, in-browser proof check |
 | `evidence/` | Real signed request/response/signature bundles (photos from Wikimedia Commons, credits inside) |
@@ -132,8 +149,11 @@ Code was written with AI assistance (Claude).
   photo provenance (C2PA-signed camera captures, geotag checks) is the next step.
 - The TEE signing key is registered by the contract owner after an off-chain DCAP check; verifying the
   TDX quote inside the contract is planned.
-- Payments use native NEAR on testnet. Cross-chain payout to the contractor's preferred stablecoin uses
-  NEAR Intents (1Click API), which has no testnet.
+- Escrow runs in native NEAR on testnet. The payout leg is real and mainnet-only:
+  - the app quotes the holder's payout in USDC on Solana, Base, Arbitrum or NEAR via NEAR Intents (1Click API);
+  - `verifier/payout.mjs send` performs the actual swap and transfer from a mainnet payout account,
+    wrapping NEAR and depositing it to the intent;
+  - NEAR Intents has no testnet, so the two legs are not yet joined in one contract call.
 - Disputes after a contested approval go to an arbiter (`resolve_dispute`).
 
 ## The other project in this submission

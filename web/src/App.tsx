@@ -153,12 +153,51 @@ function Sheet({ project, m, state, config, role, busy, run }: { project: Projec
 
       <Actions project={project} m={m} role={role} config={config} face={face} holder={holder} listing={listing} windowLeft={windowLeft} busy={busy} run={run} />
 
+      {m.token_id && <Payout key={m.token_id} face={face} holder={holder} />}
+
       <section className="verdicts">
         <h3>Inspections</h3>
         {verdicts.length === 0 && <p className="quiet">No photos submitted yet. The contractor uploads site photos; the enclave decides.</p>}
         {verdicts.map((v, i) => <VerdictCard key={v.response_hash} v={v} latest={i === 0} />)}
       </section>
     </article>
+  );
+}
+
+const CHAINS = [
+  { id: 'sol', label: 'USDC on Solana', hint: 'Solana address' },
+  { id: 'base', label: 'USDC on Base', hint: '0x… address' },
+  { id: 'arb', label: 'USDC on Arbitrum', hint: '0x… address' },
+  { id: 'near', label: 'USDC on NEAR', hint: 'name.near' },
+];
+
+/** Where the receivable's holder wants the money: a live NEAR Intents quote for the payout (quote only, nothing moves). */
+function Payout({ face, holder }: { face: bigint; holder?: string }) {
+  const [chain, setChain] = useState('sol');
+  const [to, setTo] = useState('');
+  const [q, setQ] = useState<any>(null);
+  const [err, setErr] = useState('');
+  const [busy, setBusy] = useState(false);
+  const c = CHAINS.find((x) => x.id === chain)!;
+  const ask = async (e: { preventDefault(): void }) => {
+    e.preventDefault();
+    setBusy(true); setErr(''); setQ(null);
+    try { setQ(await post('payout-quote', { chain, recipient: to, amount: face.toString() })); } catch (x: any) { setErr(x.message); } finally { setBusy(false); }
+  };
+  return (
+    <section className="payout">
+      <h3>Get paid in a stablecoin, on any chain</h3>
+      <p className="quiet">When escrow pays {holder ? shortAcct(holder) : 'the holder'}, NEAR Intents can deliver it as USDC wherever they keep money. This is a live mainnet quote for {near(face, 4)} Ⓝ; nothing moves from here.</p>
+      <form className="row" onSubmit={ask}>
+        <select value={chain} onChange={(e) => { setChain(e.target.value); setQ(null); }} aria-label="Payout currency and chain">
+          {CHAINS.map((x) => <option key={x.id} value={x.id}>{x.label}</option>)}
+        </select>
+        <input className="grow" value={to} onChange={(e) => setTo(e.target.value)} placeholder={c.hint} aria-label="Payout address" required />
+        <button className="ghost" disabled={busy}>{busy ? 'Asking NEAR Intents…' : 'Get a live quote'}</button>
+      </form>
+      {err && <p className="err-inline">{err}</p>}
+      {q && <p className="quote"><strong>{q.amountOut} {q.label}</strong> for {q.amountIn} Ⓝ (≈ ${Number(q.amountInUsd).toFixed(2)}), delivered in about {q.timeEstimate} seconds through NEAR Intents.</p>}
+    </section>
   );
 }
 

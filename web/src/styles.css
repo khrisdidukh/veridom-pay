@@ -159,3 +159,10 @@ code { font-family: 'JetBrains Mono', ui-monospace, monospace; }
 @media (prefers-reduced-motion: reduce) {
   .verdict.latest .stamp, .spinner { animation: none; }
 }
+
+/* stablecoin payout via NEAR Intents */
+.payout { padding: 20px 0 22px; border-bottom: 1px solid var(--rule); display: grid; gap: 10px; }
+.payout h3 { margin: 0; font-size: 18px; }
+.payout select, .payout input { padding: 9px 10px; border: 1px solid var(--rule); border-radius: 6px; background: white; color: var(--graphite); min-width: 0; }
+.payout .quote { margin: 0; padding: 10px 14px; background: #eef4ef; border-left: 4px solid var(--ink-ok); }
+.err-inline { margin: 0; color: var(--ink-bad); }

@@ -117,6 +117,33 @@ app.post('/api/buy', wrap(async (req) => {
   await call('investor', 'buy_receivable', { token_id: req.body.token_id }, BigInt(l[1].price));
   return { ok: true };
 }));
+// Stablecoin payout rail via NEAR Intents (1Click API). Live mainnet quote for the holder's payout; no funds move here.
+const INTENTS = 'https://1click.chaindefuser.com/v0';
+const PAYOUT = {
+  near: { asset: 'nep141:17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1', label: 'USDC on NEAR', ok: (a) => /^([a-z0-9_-]+\.)*[a-z0-9_-]+\.near$|^[0-9a-f]{64}$/.test(a) },
+  sol: { asset: 'nep141:sol-5ce3bf3a31af18be40ba30f721101b4341690186.omft.near', label: 'USDC on Solana', ok: (a) => /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(a) },
+  base: { asset: 'nep141:base-0x833589fcd6edb6e08f4c7c32d4f71b54bda02913.omft.near', label: 'USDC on Base', ok: (a) => /^0x[0-9a-fA-F]{40}$/.test(a) },
+  arb: { asset: 'nep141:arb-0xaf88d065e77c8cc2239327c5edb3a432268e5831.omft.near', label: 'USDC on Arbitrum', ok: (a) => /^0x[0-9a-fA-F]{40}$/.test(a) },
+};
+app.post('/api/payout-quote', wrap(async (req) => {
+  const { chain, recipient, amount } = req.body;
+  const dest = PAYOUT[chain];
+  if (!dest) throw new Error('Pick where the money should land.');
+  if (!dest.ok(String(recipient || '').trim())) throw new Error(`That is not a valid address for ${dest.label}.`);
+  if (!/^\d+$/.test(String(amount)) || BigInt(amount) <= 0n || BigInt(amount) > 1000n * 10n ** 24n) throw new Error('bad amount');
+  const body = {
+    dry: true, swapType: 'EXACT_INPUT', slippageTolerance: 100,
+    originAsset: 'nep141:wrap.near', depositType: 'ORIGIN_CHAIN', amount: String(amount),
+    destinationAsset: dest.asset, recipient: String(recipient).trim(), recipientType: 'DESTINATION_CHAIN',
+    refundTo: process.env.PAYOUT_REFUND_ACCOUNT || 'intents.near', refundType: 'ORIGIN_CHAIN',
+    deadline: new Date(Date.now() + 3_600_000).toISOString(),
+  };
+  const r = await fetch(`${INTENTS}/quote`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(process.env.ONECLICK_JWT ? { Authorization: `Bearer ${process.env.ONECLICK_JWT}` } : {}) }, body: JSON.stringify(body) });
+  const q = await r.json();
+  if (!r.ok || !q.quote) throw new Error(`NEAR Intents could not quote this payout: ${q.message || r.status}`);
+  return { label: dest.label, amountIn: q.quote.amountInFormatted, amountInUsd: q.quote.amountInUsd, amountOut: q.quote.amountOutFormatted, minAmountOut: q.quote.minAmountOut, timeEstimate: q.quote.timeEstimate, at: new Date().toISOString() };
+}));
+
 app.post('/api/settle', wrap(async (req) => { await call(req.body.role || 'investor', 'settle', { project_id: req.body.project, milestone_id: req.body.milestone }); return { ok: true }; }));
 app.post('/api/release-retainage', wrap(async (req) => { await call('contractor', 'release_retainage', { project_id: req.body.project }); return { ok: true }; }));
 
