@@ -27,6 +27,27 @@ private builders in Austria and Ukraine. This hackathon build is new code writte
 site photos for a real TEE inspection, buy a receivable, and check any verdict's proof in your browser.
 (Free hosting: the first load after a quiet period takes about 40 seconds.)
 
+## Try it in two minutes
+
+The demo site holds three testnet accounts. You switch between them with the role buttons at the top.
+
+1. Open https://veridom-pay.onrender.com. Pick project **VIENNA-02**, then milestone **Floor tiling**.
+   → The money trail is complete: escrow, receivable NFT, sold early to the investor, paid out by escrow.
+2. Press **Check this verdict in your browser** under the APPROVED stamp.
+   → Green checks computed in your browser:
+   - the photos are extracted from the signed request and re-hashed;
+   - the request matches the on-chain inspection prompt;
+   - the enclave's ed25519 signature is valid.
+3. As **Homeowner**, press **New project**, add a milestone with acceptance criteria, then **Fund and create**.
+   → A real testnet transaction locks the money in escrow.
+4. As **Contractor**, open that milestone, choose one to six site photos, then **Send for inspection**.
+   → In about 40 seconds a stamp lands: APPROVED, REJECTED or NEEDS MORE EVIDENCE, with findings. Try a
+   photo that doesn't match the criteria: the inspector is strict.
+5. If it was approved, press **Sell receivable now** (97%). Then switch to **Investor** and press **Buy**.
+   → The NFT changes hands and the contractor has cash before the review window ends.
+6. Offline: `cd verifier && npm install && npm test`
+   → Every bundle in `evidence/` verifies, and every altered or forged one fails.
+
 ## What is verified, by whom
 
 | Claim | Checked by |
@@ -85,6 +106,25 @@ New inspections need a NEAR AI Cloud key in `.env` (`NEARAI_API_KEY=...`) and de
 and lets you verify every verdict.
 
 Live testnet contract: [`vp-vpay-2158.testnet`](https://testnet.nearblocks.io/address/vp-vpay-2158.testnet)
+
+## What is new, what came before, what it uses
+
+Built in the hackathon window (from 19 Oct 2026): everything in this repository.
+- The contracts and tests, the verifier, the server and the web app.
+- All on-chain projects and evidence bundles.
+- Veridom (veridom.space) is my existing house-building control app on the web. No code from it is used
+  here; Veridom Pay is its new payments module, built for NEAR.
+
+Libraries and services:
+- near-sdk and near-contract-standards 5.5 (NEP-171), serde_json, hex;
+- near-api-js 7.4, express, multer, sharp;
+- React 18, Vite, `@noble/curves`;
+- `dcap-qvl` (attestation check);
+- NEAR AI Cloud (`Qwen/Qwen3.8-27B` in a TEE);
+- Google Fonts (Archivo, JetBrains Mono).
+
+Demo photos: Wikimedia Commons (credits in `evidence/README.md`) and my own photos of a terrazzo floor.
+Code was written with AI assistance (Claude).
 
 ## Honest limits
 
