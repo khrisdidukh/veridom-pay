@@ -105,7 +105,11 @@ export default function App() {
 
       <footer className="foot">
         Contract <a href={`${config?.explorer}/address/${config?.contract}`} target="_blank" rel="noreferrer">{config?.contract}</a>
-        {' '}· inspector {config?.ai.model} · {config?.ai.privacy}
+        {' '}on NEAR testnet, inspector {config?.ai.model}, {config?.ai.privacy}.{' '}
+        Code: <a href="https://github.com/khrisdidukh/veridom-pay">github.com/khrisdidukh/veridom-pay</a> (MIT).
+        <br />
+        Built for NEAR HACKATHON 2026 by Khrystyna Didukh. The other project in this submission:{' '}
+        <a href="https://throughput-treasury.onrender.com">Throughput Treasury</a>, an autonomous treasury that only pays for work at the constraint.
       </footer>
     </div>
   );

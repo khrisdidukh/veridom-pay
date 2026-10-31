@@ -23,6 +23,10 @@ private builders in Austria and Ukraine. This hackathon build is new code writte
 
 **Tracks:** Real-World Money · Privacy & Private AI · NFTs That Do Something · AI Security & Defense
 
+**Live demo:** https://veridom-pay.onrender.com. Switch between homeowner, contractor and investor, upload
+site photos for a real TEE inspection, buy a receivable, and check any verdict's proof in your browser.
+(Free hosting: the first load after a quiet period takes about 40 seconds.)
+
 ## What is verified, by whom
 
 | Claim | Checked by |
@@ -42,6 +46,8 @@ The inspector is strict by design. Real results from 31 Oct 2026 (bundles in [`e
 | tiles still in leveling clips, joints open | **REJECTED** — saw the clips and the open joints |
 | two photos of *different* floors passed off as one | **NEEDS_MORE_EVIDENCE** — "different tile formats… implying different areas" |
 | a wide shot of a finished, grouted floor | **APPROVED** → receivable minted → sold at 97% → investor paid at settlement |
+| close-ups of a real terrazzo floor, judged against "the whole floor is finished" | **NEEDS_MORE_EVIDENCE** — close-ups can't show the whole room |
+| the same close-ups, with criteria scoped to the photographed section | **APPROVED** |
 
 ## Repository
 
@@ -89,3 +95,12 @@ Live testnet contract: [`vp-vpay-2158.testnet`](https://testnet.nearblocks.io/ad
 - Payments use native NEAR on testnet. Cross-chain payout to the contractor's preferred stablecoin uses
   NEAR Intents (1Click API), which has no testnet.
 - Disputes after a contested approval go to an arbiter (`resolve_dispute`).
+
+## The other project in this submission
+
+[Throughput Treasury](https://github.com/khrisdidukh/throughput-treasury): an autonomous business treasury
+that only pays for work at the constraint. A private AI CFO in a TEE judges each vendor offer against the
+business's real flow, and the contract verifies its signature and enforces hard money rules. Live demo:
+https://throughput-treasury.onrender.com
+
+Built by Khrystyna Didukh for NEAR HACKATHON 2026 (1–14 Nov). MIT licence.
