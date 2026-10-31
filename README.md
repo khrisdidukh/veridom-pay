@@ -54,6 +54,12 @@ The demo site holds three testnet accounts. You switch between them with the rol
 
 ## Getting paid where the money is useful
 
+**Real money, on mainnet (31 Oct 2026):** 5 USDC sent from a Solana wallet (Phantom) arrived as **4.994 USDC
+on NEAR** in about 10 seconds, through the same NEAR Intents rail the app uses.
+- Solana deposit: [solscan](https://solscan.io/tx/rHKMHbzvx7m4fweosYc69wwUFVYQkk66Q5btDPPcuST8jg2SQdqk7amGDrgPCxPq4MEdtMvzsL5yDVJ63vxfU48)
+- NEAR settlement: [nearblocks](https://nearblocks.io/txns/8nmeStktAyUiHKzn1rz2f6aRdp8shLkn3SEzbng1gd6x)
+- Receipt: [`evidence/payouts/`](evidence/payouts)
+
 A contractor in Ukraine or Austria doesn't want NEAR; they want dollars they can spend. When escrow pays a
 receivable, NEAR Intents can deliver it as USDC on the payee's chain. The app shows a live mainnet quote
 for the milestone's payout, and `verifier/payout.mjs` executes it:
@@ -153,7 +159,9 @@ Code was written with AI assistance (Claude).
   - the app quotes the holder's payout in USDC on Solana, Base, Arbitrum or NEAR via NEAR Intents (1Click API);
   - `verifier/payout.mjs send` performs the actual swap and transfer from a mainnet payout account,
     wrapping NEAR and depositing it to the intent;
-  - NEAR Intents has no testnet, so the two legs are not yet joined in one contract call.
+  - a real 5 USDC Solana → NEAR transfer went through on mainnet (links above);
+  - NEAR Intents has no testnet, so the testnet escrow and the mainnet rail are not yet joined in one
+    contract call.
 - Disputes after a contested approval go to an arbiter (`resolve_dispute`).
 
 ## The other project in this submission

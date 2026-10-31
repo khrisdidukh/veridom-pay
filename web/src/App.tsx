@@ -198,6 +198,7 @@ function Payout({ face, holder }: { face: bigint; holder?: string }) {
         <button className="ghost" disabled={busy}>{busy ? 'Asking NEAR Intents…' : 'Get a live quote'}</button>
       </form>
       {err && <p className="err-inline">{err}</p>}
+      <p className="quiet">Proven with real money on 31 Oct 2026: 5 USDC from a Solana wallet arrived as 4.994 USDC on NEAR in about 10 seconds (<a href="https://solscan.io/tx/rHKMHbzvx7m4fweosYc69wwUFVYQkk66Q5btDPPcuST8jg2SQdqk7amGDrgPCxPq4MEdtMvzsL5yDVJ63vxfU48" target="_blank" rel="noreferrer">Solana deposit</a>, <a href="https://nearblocks.io/txns/8nmeStktAyUiHKzn1rz2f6aRdp8shLkn3SEzbng1gd6x" target="_blank" rel="noreferrer">NEAR settlement</a>).</p>
       {q && <p className="quote"><strong>{q.amountOut} {q.label}</strong> for {q.amountIn} Ⓝ (≈ ${Number(q.amountInUsd).toFixed(2)}), delivered in about {q.timeEstimate} seconds through NEAR Intents.</p>}
     </section>
   );

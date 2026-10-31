@@ -1,0 +1,118 @@
+{
+  "what": "First real mainnet transfer through the Veridom Pay stablecoin rail: 5 USDC from a Solana wallet (Phantom) delivered as USDC on NEAR via NEAR Intents (1Click API)",
+  "date": "2026-10-31",
+  "from": "AeBcjC72kZyHatLzYfXAjr6MriCT4hnYMNZLipA9C1Kr (Solana)",
+  "to": "stillestate4348.near (NEAR)",
+  "solana_deposit_tx": "https://solscan.io/tx/rHKMHbzvx7m4fweosYc69wwUFVYQkk66Q5btDPPcuST8jg2SQdqk7amGDrgPCxPq4MEdtMvzsL5yDVJ63vxfU48",
+  "near_txs": [
+    "https://nearblocks.io/txns/2fS5sb3KUps2fg8C8f4HoqbBhBqKFs4fwTfcmERdEvqL",
+    "https://nearblocks.io/txns/8nmeStktAyUiHKzn1rz2f6aRdp8shLkn3SEzbng1gd6x"
+  ],
+  "intent_hashes": [
+    "BXsKXj85DPA7He1nDUS2AvRVJM4HQ9fHZvVFpuBHHH3p"
+  ],
+  "quote": {
+    "amountIn": "5000000",
+    "amountInFormatted": "5.0",
+    "amountInUsd": "4.999490000000",
+    "minAmountIn": "5000000",
+    "amountOut": "4994156",
+    "amountOutFormatted": "4.994156",
+    "amountOutUsd": "4.993646596088",
+    "minAmountOut": "4944214",
+    "timeEstimate": 20,
+    "refundFee": "9979",
+    "withdrawFee": "5514",
+    "deadline": "2026-11-03T16:43:14.000Z",
+    "timeWhenInactive": "2026-11-03T16:43:14.000Z",
+    "depositAddress": "2Mg7bnprv1TCVFFGFXW2S6NVAATCmgbdMPk2zBK2DZwo"
+  },
+  "status": {
+    "status": "SUCCESS",
+    "updatedAt": "2026-10-31T13:45:55.000Z",
+    "correlationId": "198c1064-0039-417a-acc9-0f2575d3291b",
+    "swapDetails": {
+      "depositedAmount": "5000135",
+      "depositedAmountUsd": "4.999514983260",
+      "depositedAmountFormatted": "5.000135",
+      "intentHashes": [
+        "BXsKXj85DPA7He1nDUS2AvRVJM4HQ9fHZvVFpuBHHH3p"
+      ],
+      "nearTxHashes": [
+        "2fS5sb3KUps2fg8C8f4HoqbBhBqKFs4fwTfcmERdEvqL",
+        "8nmeStktAyUiHKzn1rz2f6aRdp8shLkn3SEzbng1gd6x"
+      ],
+      "amountIn": "5000000",
+      "amountInFormatted": "5.0",
+      "amountInUsd": "4.999380000000",
+      "amountOut": "4994143",
+      "amountOutFormatted": "4.994143",
+      "amountOutUsd": "4.993523726268",
+      "slippage": 0,
+      "refundedAmount": "0",
+      "refundedAmountFormatted": "0",
+      "refundedAmountUsd": "0",
+      "refundReason": null,
+      "refundFee": "9979",
+      "withdrawFee": "5514",
+      "originChainTxHashes": [
+        {
+          "hash": "rHKMHbzvx7m4fweosYc69wwUFVYQkk66Q5btDPPcuST8jg2SQdqk7amGDrgPCxPq4MEdtMvzsL5yDVJ63vxfU48",
+          "explorerUrl": ""
+        }
+      ],
+      "destinationChainTxHashes": [
+        {
+          "hash": "8nmeStktAyUiHKzn1rz2f6aRdp8shLkn3SEzbng1gd6x",
+          "explorerUrl": ""
+        }
+      ]
+    },
+    "quoteResponse": {
+      "timestamp": "2026-10-31T13:43:15.392Z",
+      "signature": "ed25519:iQyy5KPJCnt8VTPcCZLph21aJ3Ns2ctksnwnD5vv28CVt7fDBQR5KowE8A69n9bk9wBzSnz47kFeJxyYWBZkBuR",
+      "quoteRequest": {
+        "dry": false,
+        "swapType": "EXACT_INPUT",
+        "depositMode": "SIMPLE",
+        "slippageTolerance": 100,
+        "originAsset": "nep141:sol-5ce3bf3a31af18be40ba30f721101b4341690186.omft.near",
+        "depositType": "ORIGIN_CHAIN",
+        "destinationAsset": "nep141:17208628f84f5d6ad33f0da3bbbeb27ffcb398eac501a31bd6ad2011e36133a1",
+        "amount": "5000000",
+        "refundTo": "AeBcjC72kZyHatLzYfXAjr6MriCT4hnYMNZLipA9C1Kr",
+        "refundType": "ORIGIN_CHAIN",
+        "recipient": "stillestate4348.near",
+        "recipientType": "DESTINATION_CHAIN",
+        "deadline": "2026-10-31T16:43:14.000Z",
+        "appFees": [
+          {
+            "limitOrderId": null,
+            "recipient": "5880ad2b362620fadf759cbceb1cd5737ce8c6ed7fb8e9942881e6731f9247dd",
+            "fee": 1
+          }
+        ],
+        "virtualChainRecipient": null,
+        "virtualChainRefundRecipient": null,
+        "referral": null,
+        "confidentiality": "public"
+      },
+      "quote": {
+        "amountIn": "5000000",
+        "amountInFormatted": "5.0",
+        "amountInUsd": "4.999490000000",
+        "minAmountIn": "5000000",
+        "amountOut": "4994156",
+        "amountOutFormatted": "4.994156",
+        "amountOutUsd": "4.993646596088",
+        "minAmountOut": "4944214",
+        "timeWhenInactive": "2026-11-03T16:43:14.000Z",
+        "depositAddress": "2Mg7bnprv1TCVFFGFXW2S6NVAATCmgbdMPk2zBK2DZwo",
+        "deadline": "2026-11-03T16:43:14.000Z",
+        "timeEstimate": 20,
+        "refundFee": "9979",
+        "withdrawFee": "5514"
+      }
+    }
+  }
+}
