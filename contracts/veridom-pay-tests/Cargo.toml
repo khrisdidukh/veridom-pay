@@ -1,0 +1,15 @@
+[package]
+name = "veridom-pay-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+veridom-pay = { path = "../veridom-pay" }
+near-sdk = { version = "=5.5.0", features = ["unit-testing"] }
+near-contract-standards = "=5.5.0"
+ed25519-dalek = "2"
+hex = "0.4"
+serde_json = "1"
+base64 = "0.22"
+sha2 = "0.10"

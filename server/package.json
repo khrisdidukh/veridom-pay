@@ -1,0 +1,14 @@
+{
+  "name": "veridom-pay-server",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Demo API: role-based testnet accounts, TEE-signed photo checks, receivable market",
+  "scripts": { "start": "node server.mjs" },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^2.0.0",
+    "near-api-js": "7.4.0",
+    "sharp": "^0.34.0"
+  }
+}

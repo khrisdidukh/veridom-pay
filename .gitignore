@@ -1,0 +1,8 @@
+keys/
+node_modules/
+target/
+.env
+*.log
+server/data/
+web/dist/
+fixtures/

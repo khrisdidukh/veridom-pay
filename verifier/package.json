@@ -1,0 +1,20 @@
+{
+  "name": "veridom-pay-verifier",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Produce, verify and submit TEE-signed construction verdicts for the Veridom Pay contract",
+  "scripts": {
+    "verify": "node verify-bundle.mjs ../evidence/*/",
+    "test": "node test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "near-api-js": "7.4.0"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.34.5"
+  }
+}
