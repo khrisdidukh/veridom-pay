@@ -1,0 +1,16 @@
+# One-click deploy of the demo (web app + API) on Render.
+services:
+  - type: web
+    name: veridom-pay
+    runtime: node
+    plan: free
+    buildCommand: cd verifier && npm ci && cd ../server && npm ci && cd ../web && npm ci && npm run build
+    startCommand: cd server && node server.mjs
+    healthCheckPath: /api/config
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEARAI_API_KEY
+        sync: false
+      - key: VP_ACCOUNTS
+        sync: false
