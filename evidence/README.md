@@ -12,6 +12,10 @@ and submitted to the testnet contract. Anyone can re-check them offline: `npm ru
 | v2-M2-mixed | VIENNA-02 / M2 floor tiling | two photos of *different* floors | NEEDS_MORE_EVIDENCE |
 | v2-M2-clips | VIENNA-02 / M2 floor tiling | tiles in leveling clips, joints open | REJECTED |
 | v2-M2-wide | VIENNA-02 / M2 floor tiling | wide shot of a finished, grouted floor | APPROVED |
+| home-384-m1-rejected | HOME-384 / M1 floor tiling (created in the web app) | bathroom with bare screed | REJECTED |
+| home-384-m1-needs_more_evidence | HOME-384 / M1 | one close-up of a finished floor | NEEDS_MORE_EVIDENCE |
+| home-13745-m1-needs_more_evidence | HOME-13745 / M1 "floor fully tiled" | three close-ups of a real terrazzo floor (author's own photos) | NEEDS_MORE_EVIDENCE — cannot confirm the *whole* floor |
+| hall-4545-m1-approved | HALL-4545 / M1 "tiles in the photographed section" | the same three photos | APPROVED — criteria scoped to what the photos can prove |
 | test-M1 | VIENNA-01 / M1 kitchen drywall | synthetic test image | REJECTED |
 
 Photo credits (Wikimedia Commons):
