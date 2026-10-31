@@ -23,6 +23,8 @@ private builders in Austria and Ukraine. This hackathon build is new code writte
 
 **Tracks:** Real-World Money · Privacy & Private AI · NFTs That Do Something · AI Security & Defense
 
+**Demo video (1:05):** https://youtu.be/NjRCp_8rgQE
+
 **Live demo:** https://veridom-pay.onrender.com. Switch between homeowner, contractor and investor, upload
 site photos for a real TEE inspection, buy a receivable, and check any verdict's proof in your browser.
 (Free hosting: the first load after a quiet period takes about 40 seconds.)
