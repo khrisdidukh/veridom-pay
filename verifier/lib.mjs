@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 
-export const RPC = process.env.NEAR_RPC || 'https://rpc.testnet.near.org';
+export const RPC = process.env.NEAR_RPC || 'https://rpc.testnet.fastnear.com';
 export const CONTRACT = process.env.VERIDOM_CONTRACT || 'vp-vpay-2158.testnet';
 export const NEARAI = 'https://cloud-api.near.ai/v1';
 
